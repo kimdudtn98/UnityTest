@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     public float attackDelay;
     public float speed;
 
-    public int score;
+    public int boom = 0;
 
     float h, v;
     float camH;
@@ -65,20 +65,20 @@ public class Player : MonoBehaviour
             switch (power)
             {
                 case 1:
-                    GameObject obj = GameManager.Instance.bulletPool.GetBullet((int)BulletType.S);
+                    PlayerBullet obj = GameManager.Instance.bulletPool.GetBullet((int)BulletType.S);
                     obj.transform.SetParent(parent);
                     obj.transform.position = bulletPos.transform.position;
                     break;
                 case 2:
-                    GameObject objL = GameManager.Instance.bulletPool.GetBullet((int)BulletType.S);
-                    GameObject objR = GameManager.Instance.bulletPool.GetBullet((int)BulletType.S);
+                    PlayerBullet objL = GameManager.Instance.bulletPool.GetBullet((int)BulletType.S);
+                    PlayerBullet objR = GameManager.Instance.bulletPool.GetBullet((int)BulletType.S);
                     objL.transform.position = new Vector3(bulletPos.position.x - 0.2f, bulletPos.position.y);
                     objR.transform.position = new Vector3(bulletPos.position.x + 0.2f, bulletPos.position.y);
                     break;
                 case 3:
-                    GameObject objLL = GameManager.Instance.bulletPool.GetBullet((int)BulletType.S);
-                    GameObject objBB = GameManager.Instance.bulletPool.GetBullet((int)BulletType.B);
-                    GameObject objRR = GameManager.Instance.bulletPool.GetBullet((int)BulletType.S);
+                    PlayerBullet objLL = GameManager.Instance.bulletPool.GetBullet((int)BulletType.S);
+                    PlayerBullet objBB = GameManager.Instance.bulletPool.GetBullet((int)BulletType.B);
+                    PlayerBullet objRR = GameManager.Instance.bulletPool.GetBullet((int)BulletType.S);
                     objLL.transform.position = new Vector3(bulletPos.position.x - 0.3f, bulletPos.position.y);
                     objBB.transform.position = new Vector3(bulletPos.position.x, bulletPos.position.y);
                     objRR.transform.position = new Vector3(bulletPos.position.x + 0.3f, bulletPos.position.y);
@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
         {
             if (power == 3)
             {
-                score += 500;
+                GameManager.Instance.SetScore(500);
                 collision.gameObject.SetActive(false);
             }
             else
@@ -101,8 +101,16 @@ public class Player : MonoBehaviour
                 power += 1;
                 collision.gameObject.SetActive(false);
             }
-            
-            
+        }
+        else if (collision.CompareTag("Coin"))
+        {
+            GameManager.Instance.SetScore(1000);
+            collision.gameObject.SetActive(false);
+        }
+        else if(collision.CompareTag("Boom"))
+        {
+            boom += 1;
+            collision.gameObject.SetActive(false);
         }
     }
     public void Damaged(int damage)

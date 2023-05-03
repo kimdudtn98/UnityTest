@@ -11,67 +11,88 @@ public class Enemy : MonoBehaviour
         B
     };
     public EnemyType enemyType;
-    public Sprite[] sprite;
+    Animator anim;
+    [SerializeField]
     Rigidbody2D rigid;
-    SpriteRenderer enemyspren;
     public int hp;
-    public int speed;
+    public float speed;
     public int bodyDamage;
-    int count;
+
     public float time;
-    int num=1;
+
+    float camH, camV;
+
     bool isAttack;
     bool isleft = true;
     bool isright = false;
-    
-    void Start()
+
+    private void OnEnable()
     {
+        switch (enemyType)
+        {
+            case EnemyType.S:
+                hp = 1;
+                speed = 2;
+                bodyDamage = 1;
+                break;
+            case EnemyType.M:
+                hp = 3;
+                speed = 3;
+                bodyDamage = 3;
+                break;
+            case EnemyType.B:
+                hp = 7;
+                speed = 0.2f;
+                bodyDamage = 5;
+                break;
+        }
+    }
+    void Init() // Start가 씹힐 수가 있기 때문에 함수로 호출을 해주는 편이 좋다
+    {
+        camV = Camera.main.orthographicSize;
+        camH = camV * Camera.main.aspect;
         rigid = GetComponent<Rigidbody2D>();
-        enemyspren = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     
     void Update()
     {
-        
-        if (!isAttack)
+
+        if (!isAttack && enemyType == EnemyType.S)
         {
             isAttack = true;
-            GameObject enemybullet = GameManager.Instance.bulletPool.GetBullet(2);
-            enemybullet.GetComponent<EnemyBullet>().player = GameManager.Instance.player.transform;
+            EnemyBullet enemybullet = GameManager.Instance.enemyBulletPool.GetBullet(0);
             enemybullet.transform.position = transform.position;
-            ++count;
+            enemybullet.SmallBullet();
+            
             StartCoroutine(Delay());
         }
+        else if (!isAttack && enemyType == EnemyType.B)
+        {
+            isAttack = true;
+            EnemyBullet enemybulletL = GameManager.Instance.enemyBulletPool.GetBullet(0);
+            enemybulletL.transform.position = new Vector3(transform.position.x - 0.4f, transform.position.y, 0);
+            enemybulletL.BigBullet();
+            EnemyBullet enemybulletR = GameManager.Instance.enemyBulletPool.GetBullet(0);
+            enemybulletR.transform.position = new Vector3(transform.position.x + 0.4f, transform.position.y, 0);
+            enemybulletR.BigBullet();
+            StartCoroutine(Delay());
+        }
+
+
+        if (transform.position.y <= -(camV + 0.5f) ||
+            (transform.position.x <= -(camH + 0.75f) || transform.position.x >= camH + 0.75f))
+        {
+            gameObject.SetActive(false);
+        }     
     }
     private void FixedUpdate()
     {
-        if (isleft)
-        {
-            time -= Time.deltaTime;
-            if(time <= -1f)
-            {
-                time = 0;
-                isleft = false;
-                isright = true;
-            }
-        }
-        if (isright)
-        {
-            time += Time.deltaTime;
-            if(time >= 1f)
-            {
-                time = 0;
-                isright = false;
-                isleft = true;
-            }
-        }
-
         /*Vector2 pos;
         pos.x = Mathf.Cos(Time.time * 180 * Mathf.Deg2Rad);
         pos.y = Mathf.Sin(Time.time * 45 * Mathf.Deg2Rad);
         //rigid.velocity = pos;*/
-        rigid.velocity = new Vector3(time, -1, 0);
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
@@ -84,22 +105,25 @@ public class Enemy : MonoBehaviour
     public void Damaged(int damage)
     {
         hp -= damage;
-        enemyspren.sprite = sprite[1];
-        StartCoroutine(SpriteHit());
+        anim.SetTrigger("isHit");
         if(hp <= 0)
         {
             gameObject.SetActive(false);
-            StopCoroutine(SpriteHit());
-            GameObject obj = GameManager.Instance.itemPool.GetItem(Random.Range(0, 2));
+            Item obj = GameManager.Instance.itemPool.GetItem(Random.Range(0, 2));
             obj.transform.position = transform.position;
         }
     }
-    IEnumerator SpriteHit()
+    
+    public void SetEnemy(float x,float y, float rotationFloat)
     {
-        // 애니메이션으로 바꾸기
-        yield return new WaitForSeconds(0.1f);
-        enemyspren.sprite = sprite[0];
+        if (rigid == null)
+        {
+            Init();
+        }
+        rigid.velocity = new Vector3(x, y, 0).normalized * speed;
+        transform.rotation = Quaternion.Euler(Vector3.forward * rotationFloat);
     }
+
     IEnumerator Delay()
     {
         yield return new WaitForSeconds(3f);

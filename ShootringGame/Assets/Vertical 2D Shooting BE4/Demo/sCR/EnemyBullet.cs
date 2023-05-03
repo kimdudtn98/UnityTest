@@ -16,12 +16,26 @@ public class EnemyBullet : MonoBehaviour
     }
     void Start()
     {
-        offset = player.position - transform.position;
+        //offset = player.position - transform.position;
     }
     private void FixedUpdate()
     {
+        /*rigid.velocity = offset.normalized * speed;
+        StopCoroutine(DisableBullet());
+        StartCoroutine(DisableBullet());*/
+    }
+    public void SmallBullet()
+    {
+        this.player = GameManager.Instance.player.transform;
+        offset = player.position - transform.position;
         rigid.velocity = offset.normalized * speed;
         StopCoroutine(DisableBullet());
+        StartCoroutine(DisableBullet());
+    }
+    
+    public void BigBullet()
+    {
+        rigid.velocity = Vector3.down * speed;
         StartCoroutine(DisableBullet());
     }
     private void OnTriggerEnter2D(Collider2D collision)

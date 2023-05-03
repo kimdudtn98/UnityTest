@@ -112,14 +112,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5515768773082973078}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -138,12 +138,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 0
-  sprite:
-  - {fileID: 8414478535512612329, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
-  - {fileID: 4326287474489854147, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
   hp: 1
   speed: 1
   bodyDamage: 1
+  time: 0
 --- !u!95 &8023618878993562167
 Animator:
   serializedVersion: 5
@@ -154,7 +152,7 @@ Animator:
   m_GameObject: {fileID: 5515768773082973078}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 37e88451855df274bb398e2c12434b8a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

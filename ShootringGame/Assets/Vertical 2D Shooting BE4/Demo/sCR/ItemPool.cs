@@ -4,33 +4,33 @@ using UnityEngine;
 
 public class ItemPool : MonoBehaviour
 {
-    public GameObject[] itemPrefabs;
-    List<GameObject>[] pools;
+    public Item[] itemPrefabs;
+    List<Item>[] pools;
     private void Awake()
     {
-        pools = new List<GameObject>[itemPrefabs.Length];
+        pools = new List<Item>[itemPrefabs.Length];
         for (int i = 0; i < pools.Length; i++)
         {
-            pools[i] = new List<GameObject>();
+            pools[i] = new List<Item>();
         }
     }
 
-    public GameObject GetItem(int index)
+    public Item GetItem(int index)
     {
-        GameObject obj = null;
+        Item obj = null;
         foreach (var item in pools[index])
         {
-            if (!item.activeSelf)
+            if (!item.gameObject.activeSelf)
             {
                 obj = item;
-                obj.SetActive(true);
+                obj.gameObject.SetActive(true);
                 break;
             }
         }
         if (obj == null)
         {
             obj = Instantiate(itemPrefabs[index]);
-            obj.SetActive(true);
+            obj.gameObject.SetActive(true);
             pools[index].Add(obj);
         }
         return obj;

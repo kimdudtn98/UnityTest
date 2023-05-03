@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
+    
     enum EnemyType
     {
         S,
@@ -21,7 +22,7 @@ public class EnemySpawn : MonoBehaviour
         camV = Camera.main.orthographicSize;
         camH = camV * Camera.main.aspect;
         ran = Random.Range(-camH, camH);
-        StartCoroutine(SpawnMiddle());
+        //StartCoroutine(SpawnMiddle());
         StartCoroutine(SpawnLeft());
     }
 
@@ -29,13 +30,6 @@ public class EnemySpawn : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        /*if (isSpawn == false)
-        {
-            isSpawn = true;
-            GameObject obj = GameManager.Instance.enemyPool.GetEnemy(Random.Range(0, 3));
-            obj.transform.position = new Vector3(RandomNumber(), transform.position.y);
-            StartCoroutine(Delay());
-        }*/
     }
     float RandomNumber()
     {
@@ -50,33 +44,51 @@ public class EnemySpawn : MonoBehaviour
     }
     IEnumerator SpawnMiddle()
     {
-        yield return new WaitForSeconds(1f);
-        while (time < 20)
-        {
-            GameObject obj = GameManager.Instance.enemyPool.GetEnemy(Random.Range(0, 3));
-            obj.transform.position = new Vector3(RandomNumber(), transform.position.y);
-            
-            yield return new WaitForSeconds(2f);
-        }
+        yield return new WaitForSeconds(0.1f);
         
-        /*yield return new WaitForSeconds(2f);
-        while(count < 5)
-        {
-            GameObject obj = GameManager.Instance.enemyPool.GetEnemy((int)EnemyType.S);
-            obj.transform.position = new Vector3(3.45f, 5.86f);
-            count++;
-            yield return new WaitForSeconds(0.4f);
-        }*/
+        /*Enemy enemyL = GameManager.Instance.enemyPool.GetEnemy((int)EnemyType.M);
+        enemyL.transform.position = new Vector3(2, camV, 0);
+        enemyL.SetEnemy(0, -1f, 0);
+        Enemy enemyM = GameManager.Instance.enemyPool.GetEnemy((int)EnemyType.M);
+        enemyM.transform.position = new Vector3(camH, camV, 0);
+        enemyM.SetEnemy(0, -1f, 0);
+        Enemy enemyR = GameManager.Instance.enemyPool.GetEnemy((int)EnemyType.M);
+        enemyR.transform.position = new Vector3(camH + 2, camV, 0);
+        enemyR.SetEnemy(0, -1f, 0);*/
+       
     }
     IEnumerator SpawnLeft()
     {
         yield return new WaitForSeconds(1f);
-        while(time < 5)
+        while(time < 2f)
         {
-            GameObject obj = GameManager.Instance.enemyPool.GetEnemy(1);
-            obj.transform.position = new Vector3(-3.71f, 4.81f, 0);
-            obj.transform.rotation = Quaternion.Euler(Vector3.forward * 37.225f);
-            yield return new WaitForSeconds(2f);
+            Enemy enemy1 = GameManager.Instance.enemyPool.GetEnemy((int)EnemyType.S);
+            enemy1.transform.position = new Vector3(-camH - 0.5f, camV, 0);
+            enemy1.SetEnemy(1f, -1f, 50f);
+            Enemy enemy2 = GameManager.Instance.enemyPool.GetEnemy((int)EnemyType.S);
+            enemy2.transform.position = new Vector3(camH + 0.5f, camV, 0);
+            enemy2.SetEnemy(-1f, -1f, -50f);
+
+            yield return new WaitForSeconds(0.4f);
         }
+        yield return new WaitForSeconds(1f);
+        Enemy enemyL = GameManager.Instance.enemyPool.GetEnemy((int)EnemyType.M);
+        enemyL.transform.position = new Vector3(-2f, camV, 0);
+        enemyL.SetEnemy(0, -1f, 0);
+        Enemy enemyM = GameManager.Instance.enemyPool.GetEnemy((int)EnemyType.M);
+        enemyM.transform.position = new Vector3(0, camV, 0);
+        enemyM.SetEnemy(0, -1f, 0);
+        Enemy enemyR = GameManager.Instance.enemyPool.GetEnemy((int)EnemyType.M);
+        enemyR.transform.position = new Vector3(2f, camV, 0);
+        enemyR.SetEnemy(0, -1f, 0);
+
+
+        yield return new WaitForSeconds(2f);
+        Enemy enemyLB = GameManager.Instance.enemyPool.GetEnemy((int)EnemyType.B);
+        enemyLB.transform.position = new Vector3(-1.5f, camV, 0);
+        enemyLB.SetEnemy(0, -1f, 0);
+        Enemy enemyRB = GameManager.Instance.enemyPool.GetEnemy((int)EnemyType.B);
+        enemyRB.transform.position = new Vector3(1.5f, camV, 0);
+        enemyRB.SetEnemy(0, -1f, 0);
     }
 }

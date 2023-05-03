@@ -2,23 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletPool : MonoBehaviour
+public class EnemyBulletPool : MonoBehaviour
 {
-    public PlayerBullet[] bulletPrefab;
+    public EnemyBullet[] bulletPrefab;
     public Transform parent;
-    List<PlayerBullet>[] pools;
+    List<EnemyBullet>[] pools;
     private void Awake()
     {
-        pools = new List<PlayerBullet>[bulletPrefab.Length];
+        pools = new List<EnemyBullet>[bulletPrefab.Length];
         for (int i = 0; i < pools.Length; i++)
         {
-            pools[i] = new List<PlayerBullet>();
+            pools[i] = new List<EnemyBullet>();
         }
     }
-    
-    public PlayerBullet GetBullet(int index)
+
+    public EnemyBullet GetBullet(int index)
     {
-        PlayerBullet obj = null;
+        EnemyBullet obj = null;
         foreach (var item in pools[index])
         {
             if (!item.gameObject.activeSelf)
@@ -28,7 +28,7 @@ public class BulletPool : MonoBehaviour
                 break;
             }
         }
-        if(obj == null)
+        if (obj == null)
         {
             obj = Instantiate(bulletPrefab[index],transform);
             obj.transform.SetParent(parent);

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7569054499965321174}
   - component: {fileID: 7569054499965321175}
   - component: {fileID: 7569054499965321172}
+  - component: {fileID: -5266730824809350322}
   m_Layer: 9
   m_Name: Power
   m_TagString: Power
@@ -155,3 +156,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-5266730824809350322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7569054499965321173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dd5e7dc956c8e448906e686f8c6257d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

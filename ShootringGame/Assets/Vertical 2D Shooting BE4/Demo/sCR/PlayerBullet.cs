@@ -15,7 +15,11 @@ public class PlayerBullet : MonoBehaviour
     private void FixedUpdate()
     {
         rigid.velocity = Vector2.up * speed;
-        StartCoroutine(DisableBullet());
+        if(transform.position.y >= 6f)
+        {
+            gameObject.SetActive(false);
+        }
+        //StartCoroutine(DisableBullet());
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

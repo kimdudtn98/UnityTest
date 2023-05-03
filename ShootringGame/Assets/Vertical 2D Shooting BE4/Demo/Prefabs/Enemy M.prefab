@@ -152,13 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6284dcf02effc744e974430dfbbdef05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
-  sprite:
-  - {fileID: -1147401495359466748, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
-  - {fileID: -7844560889915226194, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
+  enemyType: 1
   hp: 1
   speed: 1
   bodyDamage: 1
+  time: 0
 --- !u!95 &-3236611228056649746
 Animator:
   serializedVersion: 5
@@ -169,7 +167,7 @@ Animator:
   m_GameObject: {fileID: 6425000783753788397}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f0e3f83450ba5494aaf37bccaf5e53b5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
