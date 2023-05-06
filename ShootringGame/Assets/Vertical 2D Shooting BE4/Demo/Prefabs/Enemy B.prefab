@@ -148,7 +148,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 2
+  rigid: {fileID: 0}
   hp: 1
+  shootDelay: 3
   speed: 1
   bodyDamage: 1
   time: 0

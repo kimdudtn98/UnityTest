@@ -33,11 +33,18 @@ public class EnemyBullet : MonoBehaviour
         StartCoroutine(DisableBullet());
     }
     
+    public void FiveBullet()
+    {
+        float x = Mathf.Cos(45 * Time.time * Mathf.Deg2Rad);
+        rigid.velocity = Vector3.down;
+    }
+
     public void BigBullet()
     {
         rigid.velocity = Vector3.down * speed;
         StartCoroutine(DisableBullet());
     }
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

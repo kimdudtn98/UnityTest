@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     Rigidbody2D rigid;
     public int hp;
+    public int shootDelay;
     public float speed;
     public int bodyDamage;
 
@@ -126,7 +127,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Delay()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(shootDelay);
         isAttack = false;
     }
 }
